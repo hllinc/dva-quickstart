@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Popconfirm, Button, List, Skeleton, Avatar, Card, Tag} from 'antd';
+import {Popconfirm, Button, List, Skeleton, Card, Tag, Checkbox} from 'antd';
 import styles from '../routes/Todo/todo.css';
 import TodoForm from "./TodoForm";
 
-const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, width}) => {
+const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, onChangeStatus, width}) => {
   // 等级枚举对象
   const levelEnum = [{label: '高', color: 'red'}, {label: '中', color: 'orange'}, {label: '低', color: 'green'}];
   return (
@@ -19,11 +19,12 @@ const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, width}) =>
               <Popconfirm title="确定删除?" onConfirm={() => onDelete(item.key)}>
                 <Button type={'danger'} size={'small'}>删除</Button>
               </Popconfirm>]}
+            className={item.checked ? styles.checked : ''}
           >
             <Skeleton avatar title={false} loading={item.loading} active>
               <List.Item.Meta
                 avatar={
-                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
+                  <Checkbox onChange={(e) => onChangeStatus(e, item)} checked={item.checked}/>
                 }
                 title={item.name}
                 description={item.content}
@@ -45,6 +46,7 @@ TodoList.propTypes = {
   onDelete: PropTypes.func.isRequired, // 删除事件
   onClose: PropTypes.func.isRequired, // 关闭事件
   onSubmit: PropTypes.func.isRequired, // 提交事件
+  onChangeStatus: PropTypes.func.isRequired, // 改变状态
   width: PropTypes.string // 组件宽度
 };
 

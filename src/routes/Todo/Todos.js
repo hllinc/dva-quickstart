@@ -39,10 +39,18 @@ const Todos = ({dispatch, todos}) => {
     })
   }
 
+  function handleChangeStatus(e, item) {
+    item.checked = e.target.checked;
+    dispatch({
+      type: 'todos/changeStatus',
+      payload: item
+    })
+  }
+
   return (
     <React.Fragment>
       <TodoList dispatch={dispatch} onAdd={handleAdd} onDelete={handleDelete} onClose={handleClose} onEdit={handleEdit}
-                onSubmit={handleSubmit} todos={todos} width={'50vw'}/>
+                onSubmit={handleSubmit} onChangeStatus={handleChangeStatus} todos={todos} width={'50vw'}/>
     </React.Fragment>
   );
 };
