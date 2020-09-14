@@ -1,8 +1,8 @@
 # Dva Todo Demo
-使用dva开发的一个todo功能的demo，UI为Antd
+使用dva开发的一个todo功能的demo，UI为Antd。
 ## 路由
 ### 多级路由实现
-- 父路由，放在根路由上，参见src/router.js文件的内容及装载方式
+- 父路由，放在根路由上，参见src/router.js文件的内容及装载方式。
 ```javascript
 function RouterConfig({history}) {
   return (
@@ -78,7 +78,7 @@ const Todos = ({dispatch, todos}) => {
   );
 };
 ```
-- 子组件，参见src/components/TodoList.js文件内容及装载方式
+- 子组件，参见src/components/TodoList.js文件内容及装载方式。
 ```javascript
 const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, onChangeStatus, width}) => {
   // 等级枚举对象
