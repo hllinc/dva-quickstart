@@ -9,15 +9,18 @@ const Products = ({ dispatch, products }) => {
       payload: id,
     });
   }
+
+  function handleAdd() {
+
+  }
   return (
     <div>
       <h2>List of Products</h2>
-      <ProductList onDelete={handleDelete} products={products} />
+      <ProductList onDelete={handleDelete} onAdd={{handleAdd}} products={products} />
     </div>
   );
 };
 
-// export default Products;
 export default connect(({ products }) => ({
   products,
 }))(Products);
