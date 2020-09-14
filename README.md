@@ -194,3 +194,5 @@ export default connect(({products, todos}) => ({
   products, todos
 }))(Products);
 ```
+## API
+### 
