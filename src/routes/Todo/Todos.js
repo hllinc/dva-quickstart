@@ -1,11 +1,8 @@
 import React from 'react';
 import {connect} from 'dva';
 import TodoList from "../../components/TodoList";
-import {Modal} from "antd";
-import TodoForm from "../../components/TodoForm";
 
 const Todos = ({dispatch, todos}) => {
-  let selectedItem = null;
 
   function handleDelete(key) {
     dispatch({
@@ -29,11 +26,17 @@ const Todos = ({dispatch, todos}) => {
   }
 
   function handleEdit(item) {
-
+    dispatch({
+      type: 'todos/edit',
+      payload: item
+    })
   }
 
   function handleSubmit(item) {
-
+    dispatch({
+      type: 'todos/submit',
+      payload: item
+    })
   }
 
   return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Form, Input, Button, Select} from "antd";
-import {connect} from "dva";
+import {Form, Input, Modal, Select, Button} from "antd";
 
 const {Option} = Select;
 
@@ -9,95 +8,58 @@ const layout = {
   labelCol: {span: 8},
   wrapperCol: {span: 16},
 };
-const tailLayout = {
-  wrapperCol: {offset: 8, span: 16},
-};
 
-const TodoForm = ({dispatch, item}) => {
+const TodoForm = ({todos, onClose, onSubmit}) => {
 
   const [form] = Form.useForm();
 
-  const onGenderChange = value => {
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({
-          note: 'Hi, man!',
-        });
-        return;
+  // 初始化数据
+  if (todos.selectedItem) {
+    form.setFieldsValue(todos.selectedItem);
+  }
 
-      case 'female':
-        form.setFieldsValue({
-          note: 'Hi, lady!',
-        });
-        return;
+  function submit() {
+    form.validateFields().then((values) => {
+      onSubmit({...todos.selectedItem, ...values});
+      form.resetFields();
+    })
+  }
 
-      case 'other':
-        form.setFieldsValue({
-          note: 'Hi there!',
-        });
-    }
-  };
-
-  const onFinish = values => {
-    console.log(values);
-  };
-
-  const onReset = () => {
+  function close() {
+    onClose();
     form.resetFields();
-  };
-
-  const onFill = () => {
-    form.setFieldsValue({
-      note: 'Hello world!',
-      gender: 'male',
-    });
-  };
+  }
 
   return (
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-      <Form.Item name="note" label="Note" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
-      >
-        {({ getFieldValue }) => {
-          return getFieldValue('gender') === 'other' ? (
-            <Form.Item name="customizeGender" label="Customize Gender" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-          ) : null;
-        }}
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
-        </Button>
-      </Form.Item>
-    </Form>
+    <Modal
+      title={todos.selectedItem ? '编辑' : '添加'}
+      visible={todos.showModal}
+      onOk={submit}
+      onCancel={close}
+    >
+      <Form {...layout} form={form} name="control-hooks">
+        <Form.Item name="name" label="Name" rules={[{required: true}]}>
+          <Input/>
+        </Form.Item>
+        <Form.Item name="content" label="Content" rules={[{required: true}]}>
+          <Input.TextArea/>
+        </Form.Item>
+        <Form.Item name="level" label="Level" rules={[{required: true}]}>
+          <Select placeholder="选择优先级">
+            <Option value="2">低</Option>
+            <Option value="1">中</Option>
+            <Option value="0">高</Option>
+          </Select>
+        </Form.Item>
+      </Form>
+    </Modal>
   );
 };
 
 TodoForm.propTypes = {
-  item: PropTypes.object, // 当前操作的数据
+  todos: PropTypes.object.isRequired, // 当前操作的数据
+  onClose: PropTypes.func.isRequired, // 关闭事件
+  onSubmit: PropTypes.func.isRequired, // 提交事件
 };
 
 export default TodoForm;

@@ -1,11 +1,9 @@
 import React from 'react';
-import {connect} from 'dva';
 import styles from './IndexPage.css';
 import {Link, Route, Switch} from 'dva/router';
 import {Breadcrumb, Layout, Menu} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import Todos from "./Todo/Todos";
-import {withRouter} from "react-router";
 import Products from "./Products";
 
 const {SubMenu} = Menu;
@@ -63,4 +61,4 @@ const IndexPage = ({history}) => {
 
 IndexPage.propTypes = {};
 
-export default withRouter(IndexPage);
+export default IndexPage;

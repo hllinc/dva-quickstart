@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Popconfirm, Button, List, Skeleton, Avatar, Card, Modal} from 'antd';
+import {Popconfirm, Button, List, Skeleton, Avatar, Card, Modal, Tag} from 'antd';
 import styles from '../routes/Todo/todo.css';
 import TodoForm from "./TodoForm";
 
 const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, width}) => {
-
+  // 等级枚举对象
+  const levelEnum = [{label: '高', color: 'red'}, {label: '中', color: 'orange'}, {label: '低', color: 'green'}];
   return (
     <Card title="List of Todos" extra={<Button type={'primary'} onClick={onAdd}>添加</Button>} style={{width: width}}>
       <List
@@ -14,8 +15,8 @@ const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, width}) =>
         dataSource={todos.items}
         renderItem={item => (
           <List.Item
-            actions={[<Button size={'small'} onClick={onEdit(item)}>编辑</Button>,
-              <Popconfirm title="Delete?" onConfirm={() => onDelete(item.key)}>
+            actions={[<Button size={'small'} onClick={() => onEdit(item)}>编辑</Button>,
+              <Popconfirm title="确定删除?" onConfirm={() => onDelete(item.key)}>
                 <Button type={'danger'} size={'small'}>删除</Button>
               </Popconfirm>]}
           >
@@ -27,19 +28,12 @@ const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, width}) =>
                 title={item.name}
                 description={item.content}
               />
-              <div>{item.level}</div>
+              <div><Tag color={levelEnum[item.level].color}>{levelEnum[item.level].label}</Tag></div>
             </Skeleton>
           </List.Item>
         )}
       />
-      <Modal
-        title={todos.selectedItem ? '编辑' : '添加'}
-        visible={todos.showModal}
-        onOk={onSubmit}
-        onCancel={onClose}
-      >
-        <TodoForm item={todos.selectedItem}/>
-      </Modal>
+      <TodoForm todos={todos} onClose={onClose} onSubmit={onSubmit}/>
     </Card>
   );
 };
