@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Form, Input, Modal, Select, Button} from "antd";
+import {Form, Input, Modal, Select} from "antd";
 
 const {Option} = Select;
 

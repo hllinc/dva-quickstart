@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Popconfirm, Button, List, Skeleton, Avatar, Card, Modal, Tag} from 'antd';
+import {Popconfirm, Button, List, Skeleton, Avatar, Card, Tag} from 'antd';
 import styles from '../routes/Todo/todo.css';
 import TodoForm from "./TodoForm";
 
