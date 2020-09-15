@@ -16,6 +16,7 @@ export default {
     },
     delete(state, {payload: key}) {
       const s = state.items.filter(item => item.key !== key);
+      window.localStorage.setItem('todos', JSON.stringify(state.items));
       return {...state, items: s};
     },
     changeStatus(state, {payload: item}) {
@@ -24,6 +25,7 @@ export default {
           state.items.splice(index, 1, item);
         }
       })
+      window.localStorage.setItem('todos', JSON.stringify(state.items));
       return {...state};
     },
     submit(state, {payload: item}) {
@@ -38,12 +40,19 @@ export default {
         state.selectedItem.key = Math.floor(Math.random() * 100);
         state.items.unshift(state.selectedItem);
       }
+      window.localStorage.setItem('todos', JSON.stringify(state.items));
       return {...state, showModal: false, selectedItem: null};
     },
     edit(state, {payload: item}) {
       return {...state, selectedItem: item, showModal: true};
     },
     load(state, {payload: items}) {
+      const db = window.localStorage.getItem('todos');
+      if (db) {
+        return {...state, items: JSON.parse(db)};
+      } else {
+        window.localStorage.setItem('todos', JSON.stringify(items));
+      }
       return {...state, items: items};
     }
   },
