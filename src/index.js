@@ -9,13 +9,6 @@ const app = dva({
       {name: 'dva', id: 1, key: 1},
       {name: 'antd', id: 2, key: 2},
     ],
-    todos: {
-      items: [
-        {key: 1, name: '待办1', content: '这是待办1', level: '0'},
-        {key: 2, name: '待办2', content: '这是待办2', level: '1'},
-        {key: 3, name: '待办3', content: '这是待办3', level: '2', checked: true},
-      ]
-    }
   },
 });
 

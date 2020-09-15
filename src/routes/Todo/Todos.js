@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'dva';
 import TodoList from "../../components/TodoList";
 
@@ -46,6 +46,15 @@ const Todos = ({dispatch, todos}) => {
       payload: item
     })
   }
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: 'todos/query'
+      })
+    }
+  }, []);
+
 
   return (
     <React.Fragment>

@@ -1,3 +1,5 @@
+import {queryAll} from "../services/todo";
+
 export default {
   namespace: 'todos',
   state: {
@@ -41,5 +43,15 @@ export default {
     edit(state, {payload: item}) {
       return {...state, selectedItem: item, showModal: true};
     },
+    load(state, {payload: items}) {
+      return {...state, items: items};
+    }
   },
+  effects: {
+    // 异步加载
+    * query(action, {call, put}) {
+      const response = yield call(queryAll);
+      yield put({type: 'load', payload: response?.data?.data});
+    }
+  }
 };
