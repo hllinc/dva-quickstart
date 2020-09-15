@@ -48,7 +48,6 @@ const Todos = ({dispatch, todos}) => {
   }
 
   useEffect(() => {
-    console.log('useEffect')
     if (dispatch) {
       dispatch({
         type: 'todos/query'
