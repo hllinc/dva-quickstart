@@ -194,5 +194,86 @@ export default connect(({products, todos}) => ({
   products, todos
 }))(Products);
 ```
-## API
-### 
+## 异步加载
+### 使用effect
+- service
+文件位置：src/services/todo.js
+```javascript
+import request from "../utils/request";
+
+export function add(params) {
+  return request('/api/todo/add', {method: 'POST', data: params});
+}
+
+export function queryAll() {
+  return request('/api/todo/queryAll');
+}
+```
+- model
+注意effects中的方法名不要和reducers中的冲突；这块就是在effects方法中调用异步的service方法，完事后将结果再通过reducers中的方法反应到state上。
+```javascript
+effects: {
+  // 异步加载
+  * query(action, {call, put}) {
+    const response = yield call(queryAll);
+    yield put({type: 'load', payload: response?.data?.data});
+  }
+}
+```
+- 页面
+在页面中使用useEffect触发页面初始化加载数据的方法，类似React类组件中生命周期方法componentDidMount，具体见src/routes/Todo/Todos.js文件中的内容及具体装载方式。
+```javascript
+useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: 'todos/query'
+      })
+    }
+  }, []);
+```
+- mock服务
+文件位置：mock/todo.js
+```javascript
+const Mock = require('mockjs');
+let db = Mock.mock({
+  'data|3-10': [{
+    'key|+1': 1,
+    'name': '待办@date',
+    content: '测试内容@integer',
+    'level|0-2': 0,
+    'checked|1': true,
+  }]
+});
+
+module.exports = {
+  [`GET /api/todo/queryAll`](req, res) {
+
+    res.status(200).json(db);
+  },
+
+  [`POST /api/todo/add`](req, res) {
+
+    let user = req.body;
+    console.log(req);
+    user.id = Mock.mock('@id');
+    db.data.push(user);
+
+    res.status(200).json(user);
+  }
+}
+```
+- mock配置
+文件位置：.roadhogrc.mock.js
+```javascript
+const fs=require('fs');
+const path=require('path');
+const mockPath=path.join(__dirname+'/mock');
+
+const mock={};
+fs.readdirSync(mockPath).forEach(file=>{
+
+  Object.assign(mock,require('./mock/'+file));
+});
+
+module.exports=mock;
+```
