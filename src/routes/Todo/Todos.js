@@ -51,6 +51,9 @@ const Todos = ({dispatch, todos}) => {
     if (dispatch) {
       dispatch({
         type: 'todos/query'
+      }).then((items) => {
+        console.log('返回的值：', items.length);
+        console.log('loaded')
       })
     }
   }, []);

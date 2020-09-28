@@ -58,9 +58,12 @@ export default {
   },
   effects: {
     // 异步加载
-    * query(action, {call, put}) {
+    * query(action, {call, put, select}) {
       const response = yield call(queryAll);
       yield put({type: 'load', payload: response?.data?.data});
+      const items = yield select(state => state.todos.items);
+      console.log('获取到的数据条数：',items.length);
+      return items;
     }
   }
 };
