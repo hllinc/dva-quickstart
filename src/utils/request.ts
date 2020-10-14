@@ -1,5 +1,9 @@
 import fetch from 'dva/fetch';
 
+export class CustomError extends Error {
+  response: any
+}
+
 function parseJSON(response) {
   return response.json();
 }
@@ -9,7 +13,7 @@ function checkStatus(response) {
     return response;
   }
 
-  const error = new Error(response.statusText);
+  const error = new CustomError(response.statusText);
   error.response = response;
   throw error;
 }

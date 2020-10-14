@@ -1,13 +1,12 @@
 import * as React from 'react';
 import {Breadcrumb, Layout, Menu} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import {Link, Redirect, Route, Switch} from "dva/router";
+import {Link, Route} from "dva/router";
 import {lazy} from "react";
 import styles from './Index.less';
 
 const Todos = lazy(() => import('@pages/Todo/Todos'));
 const Products = lazy(() => import('@pages/Products'));
-const NotFound = lazy(() => import('@pages/Exception/404'));
 
 const {SubMenu} = Menu;
 const {Header, Content, Sider} = Layout;
