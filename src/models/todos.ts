@@ -1,12 +1,15 @@
 import {queryAll} from "../services/todo";
+import Model from "@infe/Model";
+
+export class TodoStateProps {
+  items: [] = [];
+  showModal: boolean = false;
+  selectedItem: object = [];
+}
 
 export default {
   namespace: 'todos',
-  state: {
-    items: [],
-    showModal: false,
-    selectedItem: null
-  },
+  state: new TodoStateProps(),
   reducers: {
     setModal(state, {payload: isShow}) {
       if (!isShow) {
@@ -58,7 +61,7 @@ export default {
   },
   effects: {
     // 异步加载
-    * query(action, {call, put, select}) {
+    * query(_, {call, put, select}) {
       const response = yield call(queryAll);
       yield put({type: 'load', payload: response.data.data});
       const items = yield select(state => state.todos.items);
@@ -66,4 +69,4 @@ export default {
       return items;
     }
   }
-};
+} as Model<TodoStateProps>;
