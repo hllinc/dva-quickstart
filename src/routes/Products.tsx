@@ -10,15 +10,11 @@ const Products = ({dispatch, products, todos}) => {
     });
   }
 
-  function handleAdd() {
-
-  }
-
   return (
     <div>
-      <h2>List of Products</h2>
-      <ProductList onDelete={handleDelete} onAdd={{handleAdd}} products={products}/>
-      <ProductList onDelete={handleDelete} onAdd={{handleAdd}} products={todos.items}/>
+      <h2>List of Products....</h2>
+      <ProductList onDelete={handleDelete} products={products}/>
+      <ProductList onDelete={handleDelete} products={todos.items}/>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Popconfirm, Button, List, Skeleton, Card, Tag, Checkbox} from 'antd';
-import styles from '../routes/Todo/todo.css';
+import styles from '../routes/Todo/todo.less';
 import TodoForm from "./TodoForm";
 
 const TodoList = ({todos, onAdd, onDelete, onClose, onSubmit, onEdit, onChangeStatus, width}) => {

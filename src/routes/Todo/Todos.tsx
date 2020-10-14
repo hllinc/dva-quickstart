@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'dva';
-import TodoList from "../../components/TodoList";
+import TodoList from "@comp/TodoList";
 
 const Todos = ({dispatch, todos}) => {
 
@@ -61,12 +61,19 @@ const Todos = ({dispatch, todos}) => {
 
   return (
     <React.Fragment>
-      <TodoList dispatch={dispatch} onAdd={handleAdd} onDelete={handleDelete} onClose={handleClose} onEdit={handleEdit}
-                onSubmit={handleSubmit} onChangeStatus={handleChangeStatus} todos={todos} width={'50vw'}/>
+      <TodoList
+        onAdd={handleAdd}
+        onDelete={handleDelete}
+        onClose={handleClose}
+        onEdit={handleEdit}
+        onSubmit={handleSubmit}
+        onChangeStatus={handleChangeStatus}
+        todos={todos}
+        width={'50vw'}/>
     </React.Fragment>
   );
 };
 
 export default connect(({todos}) => ({
-  todos,
+  todos
 }))(Todos);

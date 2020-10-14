@@ -1,17 +1,20 @@
-import React from 'react';
-import styles from './IndexPage.css';
-import {Link, Route, Switch} from 'dva/router';
+import * as React from 'react';
 import {Breadcrumb, Layout, Menu} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import Todos from "./Todo/Todos";
-import Products from "./Products";
+import {Link, Redirect, Route, Switch} from "dva/router";
+import {lazy} from "react";
+import styles from './Index.less';
+
+const Todos = lazy(() => import('@pages/Todo/Todos'));
+const Products = lazy(() => import('@pages/Products'));
+const NotFound = lazy(() => import('@pages/Exception/404'));
 
 const {SubMenu} = Menu;
 const {Header, Content, Sider} = Layout;
 
-const IndexPage = ({history}) => {
+const Index = (history) => {
   return (
-    <Layout style={{height:'100vh'}}>
+    <Layout style={{height: '100vh'}}>
       <Header className="header">
         <div className={styles.logo}>DVA TEST</div>
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
@@ -29,15 +32,18 @@ const IndexPage = ({history}) => {
             style={{height: '100%', borderRight: 0}}
           >
             <SubMenu key="sub1" icon={<UserOutlined/>} title="Menu">
-              <Menu.Item key="/todo"><Link to="/todo">Todos</Link></Menu.Item>
-              <Menu.Item key="/products"><Link to="/products">Products</Link></Menu.Item>
+              <Menu.Item key="/frame/todos"><Link to="/frame/todos">Todos</Link></Menu.Item>
+              <Menu.Item key="/frame/products"><Link to="/frame/products">Products</Link></Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>
         <Layout style={{padding: '0 24px 24px'}}>
           <Breadcrumb style={{margin: '16px 0'}}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>{history.location.pathname.replaceAll('/','')}</Breadcrumb.Item>
+            {history.location.pathname.split('/').map((o, index) => {
+              if (index > 0) {
+                return <Breadcrumb.Item key={index}><span style={{textTransform: 'capitalize'}}>{o}</span></Breadcrumb.Item>;
+              }
+            })}
           </Breadcrumb>
           <Content
             className={styles.siteLayoutBackground}
@@ -48,17 +54,14 @@ const IndexPage = ({history}) => {
               overflow: 'auto'
             }}
           >
-            <Switch>
-              <Route path="/todo" component={Todos}/>
-              <Route path="/products" component={Products}/>
-            </Switch>
+            <Route path="/frame/products" component={Products}/>
+            <Route path="/frame/todos" component={Todos}/>
           </Content>
         </Layout>
       </Layout>
     </Layout>
   );
-}
+};
 
-IndexPage.propTypes = {};
-
-export default IndexPage;
+Index.prototype = {};
+export default Index;

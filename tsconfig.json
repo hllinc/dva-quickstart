@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "module": "esnext",
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "target": "es6",
+    "lib": [
+      "dom",
+      "es7"
+    ],
+    "baseUrl":".",
+    "paths": {
+      "@comp/*":["./src/components/*"],
+      "@src/*":["./src/*"],
+      "@pages/*":["./src/routes/*"],
+      "@models/*":["./src/models/*"],
+      "@api/*":["./src/services/*"],
+      "@utils/*":["./src/utils/*"],
+      "@asset/*":["./src/asset/*"],
+      "@infe/*":["./src/interface/*"],
+      "@env/*":["./src/env/*"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es"
+  ]
+}

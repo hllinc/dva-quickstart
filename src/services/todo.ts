@@ -1,4 +1,4 @@
-import request from "../utils/request";
+import request from "@utils/request";
 
 export function add(params) {
   return request('/api/todo/add', {method: 'POST', data: params});

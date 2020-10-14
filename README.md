@@ -197,7 +197,7 @@ export default connect(({products, todos}) => ({
 ## 异步加载
 ### 使用effect
 - service
-文件位置：src/services/todo.js
+文件位置：src/services/todo.ts
 ```javascript
 import request from "../utils/request";
 
@@ -232,7 +232,7 @@ useEffect(() => {
   }, []);
 ```
 - mock服务
-文件位置：mock/todo.js
+文件位置：mock/todo.ts
 ```javascript
 const Mock = require('mockjs');
 let db = Mock.mock({
