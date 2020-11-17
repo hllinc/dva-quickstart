@@ -4,6 +4,7 @@ import {UserOutlined} from "@ant-design/icons";
 import {Link, Route} from "dva/router";
 import {lazy} from "react";
 import styles from './Index.less';
+import G6 from '@pages/G6/G6';
 
 const Todos = lazy(() => import('@pages/Todo/Todos'));
 const Products = lazy(() => import('@pages/Products'));
@@ -33,6 +34,8 @@ const Index = (history) => {
             <SubMenu key="sub1" icon={<UserOutlined/>} title="Menu">
               <Menu.Item key="/frame/todos"><Link to="/frame/todos">Todos</Link></Menu.Item>
               <Menu.Item key="/frame/products"><Link to="/frame/products">Products</Link></Menu.Item>
+              <Menu.Item key="/frame/g6"><Link to="/frame/g6">G6</Link></Menu.Item>
+              <Menu.Item key="/frame">VIS</Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>
@@ -55,6 +58,7 @@ const Index = (history) => {
           >
             <Route path="/frame/products" component={Products}/>
             <Route path="/frame/todos" component={Todos}/>
+            <Route path="/frame/g6" component={G6}/>
           </Content>
         </Layout>
       </Layout>

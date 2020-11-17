@@ -16,6 +16,7 @@ const app = dva({
 
 app.model(require('./models/products').default);
 app.model(require('./models/todos').default);
+app.model(require('./models/g6').default);
 
 app.router(require('./router').default);
 
