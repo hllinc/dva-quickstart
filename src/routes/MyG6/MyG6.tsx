@@ -128,6 +128,23 @@ const MyG6 = ({dispatch, g6}) => {
             // fill: '#fff'
           }
         },
+        // 节点上设置 8 个anchor，以方便连线
+        anchorPoints: [
+          [0,0],
+          [0.5,0],
+          [1,0],
+          [0,0.5],
+          [0,1],
+          [1,0.5],
+          [0.5,1],
+          [1,1],
+        ],
+        // linkPoints: {
+          // top: true,
+          // bottom: true,
+          // left: true,
+          // right: true
+        // }
       },
       defaultEdge: {
         // type: 'polyline',
@@ -221,6 +238,9 @@ const MyG6 = ({dispatch, g6}) => {
       });
       const nodeItem = e.item;
       graph.setItemState(nodeItem, 'click', true);
+      // 隐藏点击的节点
+      // nodeItem.hide();
+      // graph.paint();
     });
     graph.on('edge:click', e => {
       const clickEdges = graph.findAllByState('edge', 'click');
