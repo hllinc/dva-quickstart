@@ -11,6 +11,7 @@
     "antd": "^4.6.3",
     "babel-plugin-import": "^1.13.0",
     "dva": "^2.4.1",
+    "insert-css": "^2.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "tslint-react": "^5.0.0"

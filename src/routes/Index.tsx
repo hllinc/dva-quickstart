@@ -4,7 +4,7 @@ import {UserOutlined} from "@ant-design/icons";
 import {Link, Route} from "dva/router";
 import {lazy} from "react";
 import styles from './Index.less';
-import G6 from '@pages/G6/G6';
+import MyG6 from '@pages/MyG6/MyG6';
 
 const Todos = lazy(() => import('@pages/Todo/Todos'));
 const Products = lazy(() => import('@pages/Products'));
@@ -58,7 +58,7 @@ const Index = (history) => {
           >
             <Route path="/frame/products" component={Products}/>
             <Route path="/frame/todos" component={Todos}/>
-            <Route path="/frame/g6" component={G6}/>
+            <Route path="/frame/g6" component={MyG6}/>
           </Content>
         </Layout>
       </Layout>

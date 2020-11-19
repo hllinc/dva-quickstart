@@ -9,39 +9,42 @@ export class G6Model {
     nodes: [
       {
         id: '1',
-        label: '公司11111'
+        label: '开始',
+        size: 50,
+        type: 'circle',
+        props: {
+          info: '这是开始'
+        }
       },
       {
         id: '2',
-        label: '公司2'
+        label: '流程1',
+        props: {
+          info: '这是一个流程'
+        }
       },
       {
         id: '3',
-        label: '公司3'
+        label: '流程2',
+        props: {
+          info: '这是一个流程'
+        }
       },
       {
         id: '4',
-        label: '公司4'
+        label: '流程3',
+        props: {
+          info: '这是一个流程'
+        }
       },
       {
         id: '5',
-        label: '公司5'
-      },
-      {
-        id: '6',
-        label: '公司6'
-      },
-      {
-        id: '7',
-        label: '公司7'
-      },
-      {
-        id: '8',
-        label: '公司8'
-      },
-      {
-        id: '9',
-        label: '公司9'
+        label: '结束',
+        type: 'circle',
+        size: 50,
+        props: {
+          info: '这是结束'
+        }
       }
     ],
     edges: [
@@ -64,24 +67,6 @@ export class G6Model {
         }
       },
       {
-        source: '2',
-        target: '5',
-        data: {
-          type: 'name1',
-          amount: '100,000,000,00 元',
-          date: '2019-08-03'
-        }
-      },
-      {
-        source: '5',
-        target: '6',
-        data: {
-          type: 'name2',
-          amount: '100,000,000,00 元',
-          date: '2019-08-03'
-        }
-      },
-      {
         source: '3',
         target: '4',
         data: {
@@ -91,32 +76,23 @@ export class G6Model {
         }
       },
       {
+        source: '2',
+        target: '4',
+        data: {
+          type: 'name4',
+          amount: '100,000,000,00 元',
+          date: '2019-08-03'
+        }
+      },
+      {
         source: '4',
-        target: '7',
+        target: '5',
         data: {
-          type: 'name2',
+          type: 'name5',
           amount: '100,000,000,00 元',
           date: '2019-08-03'
         }
       },
-      {
-        source: '1',
-        target: '8',
-        data: {
-          type: 'name2',
-          amount: '100,000,000,00 元',
-          date: '2019-08-03'
-        }
-      },
-      {
-        source: '1',
-        target: '9',
-        data: {
-          type: 'name3',
-          amount: '100,000,000,00 元',
-          date: '2019-08-03'
-        }
-      }
     ]
   };
 }
