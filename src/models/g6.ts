@@ -14,7 +14,13 @@ export class G6Model {
         type: 'circle',
         props: {
           info: '这是开始'
-        }
+        },
+        anchorPoints: [
+          [0.5,0],
+          [0,0.5],
+          [1,0.5],
+          [0.5,1],
+        ],
       },
       {
         id: '2',
@@ -44,7 +50,13 @@ export class G6Model {
         size: 50,
         props: {
           info: '这是结束'
-        }
+        },
+        anchorPoints: [
+          [0.5,0],
+          [0,0.5],
+          [1,0.5],
+          [0.5,1],
+        ],
       }
     ],
     edges: [
