@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.less';
-import {Button, Select} from 'antd';
+import {Button} from 'antd';
 
 export default ({graph}) => {
   const repaintEvent = () => {

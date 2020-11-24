@@ -1,4 +1,4 @@
-import {queryAll} from "../services/g6";
+import {queryAll} from "@api/g6";
 import Model from "@infe/Model";
 
 export class G6Model {
@@ -16,10 +16,10 @@ export class G6Model {
           info: '这是开始'
         },
         anchorPoints: [
-          [0.5,0],
-          [0,0.5],
-          [1,0.5],
-          [0.5,1],
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
         ],
       },
       {
@@ -52,10 +52,10 @@ export class G6Model {
           info: '这是结束'
         },
         anchorPoints: [
-          [0.5,0],
-          [0,0.5],
-          [1,0.5],
-          [0.5,1],
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
         ],
       }
     ],
