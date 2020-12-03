@@ -118,7 +118,7 @@ const MyG6 = ({dispatch, g6}) => {
 
     graph = new G6.Graph({
       container: ReactDOM.findDOMNode(ref.current),
-      width: 1500,
+      width: ref.current.scrollWidth,
       height: 800,
       animate: true,
       defaultNode: {
