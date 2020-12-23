@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@antv/g6": "^3.8.5",
+    "@sentry/react": "^5.29.2",
+    "@sentry/tracing": "^5.29.2",
     "antd": "^4.6.3",
     "babel-plugin-import": "^1.13.0",
     "dva": "^2.4.1",
