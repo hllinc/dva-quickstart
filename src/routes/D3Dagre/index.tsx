@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'dva';
-import CustomFlow from "@comp/customFlow";
+import D3Dagre from "@comp/d3Dagre";
 
-const CustomFlowPage = ({dispatch, customFlow}) => {
+const D3DagrePage = ({dispatch, customFlow}) => {
 
   return (
     <React.Fragment>
-      <CustomFlow {...customFlow} />
+      <D3Dagre {...customFlow} />
     </React.Fragment>
   );
 };
 
 export default connect(({customFlow}) => ({
   customFlow
-}))(CustomFlowPage);
+}))(D3DagrePage);

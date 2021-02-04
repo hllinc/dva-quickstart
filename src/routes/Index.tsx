@@ -5,7 +5,8 @@ import {Link, Route} from "dva/router";
 import {lazy} from "react";
 import styles from './Index.less';
 import MyG6 from '@pages/MyG6/MyG6';
-import CustomFlowPage from "@pages/CustomFlow";
+import CustomFlowPage from "@pages/D3Dagre";
+import SDFlow from "@pages/SDFlow";
 
 const Todos = lazy(() => import('@pages/Todo/Todos'));
 const Products = lazy(() => import('@pages/Products'));
@@ -36,7 +37,8 @@ const Index = (history) => {
               <Menu.Item key="/frame/todos"><Link to="/frame/todos">Todos</Link></Menu.Item>
               <Menu.Item key="/frame/products"><Link to="/frame/products">Products</Link></Menu.Item>
               <Menu.Item key="/frame/g6"><Link to="/frame/g6">G6</Link></Menu.Item>
-              <Menu.Item key="/frame/customFlow"><Link to="/frame/customFlow">CustomFlow</Link></Menu.Item>
+              <Menu.Item key="/frame/d3-dagre"><Link to="/frame/d3-dagre">D3-dagre-react</Link></Menu.Item>
+              <Menu.Item key="/frame/sd-flow"><Link to="/frame/sd-flow">SDFlow</Link></Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>
@@ -60,7 +62,8 @@ const Index = (history) => {
             <Route path="/frame/products" component={Products}/>
             <Route path="/frame/todos" component={Todos}/>
             <Route path="/frame/g6" component={MyG6}/>
-            <Route path="/frame/customFlow" component={CustomFlowPage}/>
+            <Route path="/frame/d3-dagre" component={CustomFlowPage}/>
+            <Route path="/frame/sd-flow" component={SDFlow}/>
           </Content>
         </Layout>
       </Layout>

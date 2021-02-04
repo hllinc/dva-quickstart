@@ -2,8 +2,8 @@ import {queryAll} from "@api/g6";
 import Model from "@infe/Model";
 
 export class CustomFlowModel {
-  width: number = 1000;
-  height: number = 800;
+  width: number|string = 1000;
+  height: number|string = 800;
   items: [] = [];
   showModal: boolean = false;
   selectedItem: object = [];
