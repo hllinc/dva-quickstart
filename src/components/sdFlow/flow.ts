@@ -19,7 +19,7 @@ export function initMap(mapData, canvas) {
   // _drawEdges(mapData.edges, canvas);
   // 配置画布属性
   // 注册事件
-  // _initEvent(canvas);
+  _initEvent(canvas);
 }
 
 /**
@@ -40,6 +40,8 @@ function _initEvent(canvas) {
   });
   // 移动画布事件
   canvas.on("mouse:move", function (e) {
+    const s = canvas.getActiveObjects();
+    console.log(s);
     if (this.panning && e && e.e) {
       var delta = new fabric.Point(e.e.movementX, e.e.movementY);
       canvas.relativePan(delta);
@@ -117,10 +119,10 @@ function getCanvasItemById(canvas, id) {
 /**
  * 绘制画布上的节点
  * @param nodes
- * @param ctx
+ * @param canvas
  * @private
  */
-function _drawNodes(nodes, ctx) {
+function _drawNodes(nodes, canvas) {
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
     const cfg = {
@@ -131,9 +133,12 @@ function _drawNodes(nodes, ctx) {
       height: 30,
       label: node.label
     };
-    _createNode(ctx, cfg);
-    if(node.children.length > 0) {
-      _drawNodes(node.children, ctx);
+    // 不绘制相同 id 的节点
+    if (!getCanvasItemById(canvas, node.id)) {
+      _createNode(canvas, cfg);
+      if(node.children.length > 0) {
+        _drawNodes(node.children, canvas);
+      }
     }
   }
 }
