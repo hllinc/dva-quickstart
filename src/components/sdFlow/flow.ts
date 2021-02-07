@@ -41,10 +41,11 @@ function _initEvent(canvas) {
   // 移动画布事件
   canvas.on("mouse:move", function (e) {
     const s = canvas.getActiveObjects();
-    console.log(s);
-    if (this.panning && e && e.e) {
-      var delta = new fabric.Point(e.e.movementX, e.e.movementY);
-      canvas.relativePan(delta);
+    if (s.length === 0) {
+      if (this.panning && e && e.e) {
+        var delta = new fabric.Point(e.e.movementX, e.e.movementY);
+        canvas.relativePan(delta);
+      }
     }
   });
   // 鼠标滚动画布放大缩小
