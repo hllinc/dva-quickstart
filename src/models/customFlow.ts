@@ -2,13 +2,13 @@ import {queryAll} from "@api/g6";
 import Model from "@infe/Model";
 
 export class CustomFlowModel {
-  width: number|string = 1000;
+  width: number|string = 1800;
   height: number|string = 800;
   items: [] = [];
   showModal: boolean = false;
   selectedItem: object = [];
   data = {
-    "nodes": [{
+    nodes: [{
       "id": "AUD_MATCHED",
       "label": "AUD_MATCHED",
       "color": "blue"
@@ -247,7 +247,7 @@ export class CustomFlowModel {
       "id": "SU_RECYCLE_BIN",
       "label": "SU_RECYCLE_BIN"
     }],
-    "edges": [{
+    edges: [{
       "source": "AUD_MATCHED",
       "target": "SU_MATCHED_S100",
       "label": "0",
