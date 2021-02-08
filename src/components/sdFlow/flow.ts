@@ -1,6 +1,11 @@
 import {fabric} from 'fabric';
 import {cloneDeep} from 'lodash';
 
+const _defaultCfg = {
+  width: 240,
+  height: 60
+};
+
 /**
  * 初始化画布
  * @param data
@@ -85,22 +90,98 @@ function _formatData(data) {
     }
   }
   data.treeNodes = resultTreeNode['ROOT'];
-  _generateNodeInfo([data.treeNodes], {level: 1, x: 20, y: 20});
+  _genetateNodeInfo([data.treeNodes], {level: 1, x: 20, y: 20});
+  console.log(levelInfo)
   console.log(data.treeNodes)
   return data;
 }
-function _generateNodeInfo(nodes, cfg) {
-  for(let i=0;i<nodes.length;i++) {
+
+const levelInfo = {};
+
+/**
+ * 计算 node 信息
+ * @param nodes
+ * @param cfg
+ * @private
+ */
+function _genetateNodeInfo(nodes, cfg) {
+  // 这里需要按顺序执行
+  _generateNodeLevelInfo(nodes, cfg);
+  _generateNodeOrderInfo(nodes);
+  _generateNodePositionInfo(nodes, _getMaxLevelNodeCount(levelInfo));
+}
+
+/**
+ * 获取层级上最多的节点数
+ * @param levelInfo
+ * @private
+ */
+function _getMaxLevelNodeCount(levelInfo) {
+  const result: any = [];
+  for (const key in levelInfo) {
+    result.push(levelInfo[key]);
+  }
+  if (result.length > 0) {
+    return result.sort((a, b) => b - a)[0];
+  } else {
+    return 0;
+  }
+}
+
+/**
+ * 计算节点位置信息
+ * @param nodes
+ * @param maxLevelNodeCount
+ * @private
+ */
+function _generateNodePositionInfo(nodes, maxLevelNodeCount) {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    node.x = (maxLevelNodeCount * (_defaultCfg.width + 100) / nodes.length * node.order;
+    node.y = node.level * (_defaultCfg.height + 100);
+    if (node.children.length > 0) {
+      _generateNodePositionInfo(node.children, maxLevelNodeCount);
+    }
+  }
+}
+
+/**
+ * 计算 node level 信息
+ * @param nodes
+ * @param cfg
+ * @private
+ */
+function _generateNodeLevelInfo(nodes, cfg) {
+  for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
     node.level = cfg.level;
-    node.x = cfg.x + 300 * i;
-    node.y = cfg.y;
-    if(node.children.length > 0) {
-      _generateNodeInfo(node.children, {
+    if (levelInfo[cfg.level]) {
+      levelInfo[cfg.level]++;
+    } else {
+      levelInfo[cfg.level] = 1;
+    }
+    if (node.children.length > 0) {
+      _generateNodeLevelInfo(node.children, {
         level: node.level + 1,
-        x: node.x,
-        y: node.y + 100
       });
+    }
+  }
+}
+
+// 记录同一 level 元素顺序
+const _tempLevel = {};
+
+function _generateNodeOrderInfo(nodes) {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if (_tempLevel[node.level]) {
+      _tempLevel[node.level]++;
+    } else {
+      _tempLevel[node.level] = 1;
+    }
+    node.order = _tempLevel[node.level];
+    if (node.children.length > 0) {
+      _generateNodeOrderInfo(node.children);
     }
   }
 }
@@ -108,15 +189,17 @@ function _generateNodeInfo(nodes, cfg) {
 function _getNodeById(id, nodes) {
   return nodes.find((o) => o.id === id);
 }
+
 function getCanvasItemById(canvas, id) {
   let result;
-  canvas.getObjects().forEach(function(o) {
-    if(o.id === id) {
+  canvas.getObjects().forEach(function (o) {
+    if (o.id === id) {
       result = o;
     }
   });
   return result;
 }
+
 /**
  * 绘制画布上的节点
  * @param nodes
@@ -127,17 +210,13 @@ function _drawNodes(nodes, canvas) {
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
     const cfg = {
-      id: node.id,
-      x: node.x,
-      y: node.y,
-      width: 240,
-      height: 30,
-      label: node.label
+      ...node,
+      ..._defaultCfg
     };
     // 不绘制相同 id 的节点
     if (!getCanvasItemById(canvas, node.id)) {
       _createNode(canvas, cfg);
-      if(node.children.length > 0) {
+      if (node.children.length > 0) {
         _drawNodes(node.children, canvas);
       }
     }
@@ -151,23 +230,25 @@ function _drawNodes(nodes, canvas) {
  * @private
  */
 function _drawEdges(edges, canvas) {
-  for(let i=0;i<edges.length;i++) {
+  for (let i = 0; i < edges.length; i++) {
     const edge = edges[i];
     const sourceNode = getCanvasItemById(canvas, edge.source);
     const targetNode = getCanvasItemById(canvas, edge.target);
-    const x1 = sourceNode.left + sourceNode.width/2;
+    const x1 = sourceNode.left + sourceNode.width / 2;
     const y1 = sourceNode.top + sourceNode.height;
-    const x2 = targetNode.left + targetNode.width/2;
+    const x2 = targetNode.left + targetNode.width / 2;
     const y2 = targetNode.top;
     _drawLine(canvas, x1, y1, x2, y2);
   }
 }
-var getAngle = function(start,end){
+
+var getAngle = function (start, end) {
   var diff_x = end.x - start.x,
     diff_y = end.y - start.y;
   //返回角度,不是弧度
-  return 360*Math.atan(diff_y/diff_x)/(2*Math.PI);
+  return 360 * Math.atan(diff_y / diff_x) / (2 * Math.PI);
 };
+
 function _drawLine(canvas, x1, y1, x2, y2) {
   const edgeColor = 'black';
   // var triangle = new fabric.Triangle({
@@ -204,7 +285,9 @@ function _createNode(canvas, cfg) {
     originX: 'center',//调整中心点的X轴坐标
     originY: 'center'//调整中心点的Y轴坐标
   });
-  const label = new fabric.Text(cfg.label, {
+  const label = new fabric.Text(cfg.label +
+    '\nlevel:' + cfg.level +
+    '\norder:' + cfg.order, {
     fontSize: 12,
     originX: 'center',
     originY: 'center'
